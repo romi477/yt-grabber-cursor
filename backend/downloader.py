@@ -31,6 +31,23 @@ FORMAT_MAP = {
 TIMEOUT = 600  # seconds
 INFO_TIMEOUT = 60
 
+AUDIO_QUALITY_LABEL = "320k"
+
+
+def _quality_label_for_filename(quality: str = "", *, audio: bool = False) -> str:
+    """Build a short, filesystem-safe quality tag for output filenames."""
+    if audio:
+        return AUDIO_QUALITY_LABEL
+    if quality == "best":
+        return "best"
+    if quality.isdigit():
+        return f"{quality}p"
+    return re.sub(r"[^\w.-]+", "", quality) or "unknown"
+
+
+def _output_template(quality_label: str) -> str:
+    return str(DATA_DIR / f"%(title)s [{quality_label}].%(ext)s")
+
 
 def clean_url(url: str) -> str:
     """Strip playlist/index params so any copy-pasted YouTube URL works as a single video."""
@@ -157,6 +174,7 @@ def download_video(url: str, quality: str, job_id: str) -> Path:
     url = clean_url(url)
     DATA_DIR.mkdir(exist_ok=True)
     fmt = FORMAT_MAP.get(quality, FORMAT_MAP["best"])
+    quality_label = _quality_label_for_filename(quality)
 
     cmd = [
         *BASE_CMD,
@@ -165,7 +183,7 @@ def download_video(url: str, quality: str, job_id: str) -> Path:
         "--merge-output-format",
         "mp4",
         "--output",
-        str(DATA_DIR / "%(title)s.%(ext)s"),
+        _output_template(quality_label),
         "--print",
         "after_move:filepath",
         url,
@@ -191,7 +209,7 @@ def download_audio(url: str, job_id: str) -> Path:
         "--audio-quality",
         "320K",
         "--output",
-        str(DATA_DIR / "%(title)s.%(ext)s"),
+        _output_template(_quality_label_for_filename(audio=True)),
         "--print",
         "after_move:filepath",
         url,

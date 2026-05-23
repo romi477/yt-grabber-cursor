@@ -68,21 +68,55 @@
           <p id="download-error" class="error" hidden role="alert"></p>
         </section>
 
-        <section
-          class="panel panel-disabled"
-          id="transcribe-section"
-          aria-labelledby="transcribe-heading"
-          aria-disabled="true"
-        >
+        <section class="panel" id="transcribe-section" aria-labelledby="transcribe-heading">
           <h2 id="transcribe-heading">Transcribe</h2>
-          <p class="muted">Speech-to-text with Whisper — available in Part 2.</p>
-          <select disabled aria-label="File">
-            <option>Select a downloaded file</option>
-          </select>
-          <select disabled aria-label="Model">
-            <option>Whisper model</option>
-          </select>
-          <button type="button" class="btn" disabled>Transcribe</button>
+          <p class="muted">Speech-to-text with Whisper on a downloaded file.</p>
+
+          <div class="field-row">
+            <label for="file-select">File</label>
+            <select id="file-select" aria-label="Downloaded file">
+              <option value="">Loading files…</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label for="model-select">Model</label>
+            <select id="model-select" aria-label="Whisper model">
+              <option value="tiny">tiny — fastest</option>
+              <option value="base" selected>base — balanced</option>
+              <option value="small">small</option>
+              <option value="medium">medium — most accurate</option>
+            </select>
+          </div>
+
+          <button type="button" id="transcribe-btn" class="btn btn-accent" disabled>
+            Transcribe
+          </button>
+
+          <div id="transcribe-progress" class="transcribe-progress" hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="transcribe-status" class="muted">Transcribing…</span>
+          </div>
+
+          <textarea
+            id="transcript-output"
+            class="transcript-output"
+            rows="10"
+            readonly
+            hidden
+            placeholder="Transcript will appear here…"
+          ></textarea>
+
+          <div id="export-block" class="export-block" hidden>
+            <span class="export-label muted">Export</span>
+            <div class="export-buttons">
+              <button type="button" id="export-txt" class="btn btn-primary">TXT</button>
+              <button type="button" id="export-pdf" class="btn btn-primary">PDF</button>
+              <button type="button" id="export-json" class="btn btn-primary">JSON</button>
+            </div>
+          </div>
+
+          <p id="transcribe-error" class="error" hidden role="alert"></p>
         </section>
       </main>
     </div>

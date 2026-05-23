@@ -17,7 +17,19 @@ Port **8080** avoids conflicts with other services on host port 80. To use port 
 
 Downloaded files are stored in `backend/data/`. Transcripts are written to `backend/transcripts/`.
 
+Whisper model weights (default **base**) are cached in `backend/whisper-cache/` and persist across container restarts via a Docker volume mount.
+
 **Try it:** open http://localhost:8080 → paste a YouTube URL → **Get Info** → choose Video/Audio → **Download** → **Save to disk** when finished.
+
+### Automated verification
+
+With the stack running (`docker compose up -d`):
+
+```bash
+./scripts/verify.sh
+```
+
+Checks UI, API proxy, YouTube info, audio download, Whisper transcribe (`base`), and TXT/PDF/JSON export.
 
 ## Runtime dependencies (backend)
 

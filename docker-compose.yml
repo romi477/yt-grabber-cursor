@@ -5,9 +5,12 @@ services:
     build: ./backend
     ports:
       - "8001:8001"
+    environment:
+      WHISPER_CACHE_DIR: /app/whisper-cache
     volumes:
       - ./backend/data:/app/data
       - ./backend/transcripts:/app/transcripts
+      - ./backend/whisper-cache:/app/whisper-cache
     healthcheck:
       test:
         [
