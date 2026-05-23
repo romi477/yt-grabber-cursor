@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+*.mp4
+*.mp3
+
+# uv
+.uv/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Runtime data (keep directory placeholders)
+backend/data/*
+!backend/data/.gitkeep
+backend/transcripts/*
+!backend/transcripts/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs & caches
+*.log
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
